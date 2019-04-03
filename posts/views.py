@@ -30,16 +30,15 @@ def post_detail(request, pk):
 def create_or_edit_post(request, pk=None):
     """
     Create a view that allows us to create
-    or edit a post  a depending on if the Post ID
+    or edit a post depending if the Post ID
     is null or not
     """
-    
     post = get_object_or_404(Post, pk=pk) if pk else None
-    if request.Method == "POST":
+    if request.method == "POST":
         form = BlogPostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
             return redirect(post_detail, post.pk)
     else:
         form = BlogPostForm(instance=post)
-    return render(request, 'blogpostform.html', {'forn': form})
+    return render(request, 'blogpostform.html', {'form': form})
